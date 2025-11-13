@@ -188,178 +188,115 @@ const Header = () => {
                   </div>
                 </div>
 
-                {/* Center Navigation */}
-                <nav className="hidden lg:flex items-center gap-1">
-                  {/* Services Mega Menu */}
-                  <div 
-                    className="relative group/menu"
-                    onMouseEnter={() => setActiveMenu('services')}
-                    onMouseLeave={() => setActiveMenu(null)}
-                  >
-                    <button className={`group px-5 py-2.5 rounded-full font-semibold flex items-center gap-2 transition-all duration-300 relative overflow-hidden ${
-                      isScrolled 
-                        ? 'text-amber-800 hover:text-white' 
-                        : 'text-white hover:text-amber-100'
-                    }`}>
-                      <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
-                      <span className="relative z-10 text-sm">Services</span>
-                      <FaChevronDown className={`relative z-10 text-xs transition-transform duration-300 ${
-                        activeMenu === 'services' ? 'rotate-180' : ''
-                      }`} />
-                    </button>
+          {/* Center Navigation */}
+          <nav className="hidden lg:flex items-center gap-8">
+            <a href="#" className={`transition font-medium hover:text-blue-600 ${
+              isScrolled ? 'text-gray-800' : 'text-white'
+            }`}>
+              Home
+            </a>
+            
+            {/* Services Mega Menu */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setActiveMenu('services')}
+              onMouseLeave={() => setActiveMenu(null)}
+            >
+              <button className={`transition font-medium flex items-center gap-1 hover:text-blue-600 ${
+                isScrolled ? 'text-gray-800' : 'text-white'
+              }`}>
+                Services
+                <FaChevronDown style={{fontSize: '16px', transform: activeMenu === 'services' ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s'}} />
+              </button>
 
-                    {/* Mega Menu Dropdown */}
-                    <div 
-                      className={`absolute top-full left-1/2 transform -translate-x-1/2 pt-6 transition-all duration-300 ${
-                        activeMenu === 'services' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4 pointer-events-none'
-                      }`}
-                      style={{ zIndex: 99999 }}
-                    >
-                      <div className="w-[450px] bg-gradient-to-br from-amber-50 to-stone-50 rounded-2xl shadow-xl border border-amber-200/50 overflow-hidden backdrop-blur-xl">
-                        {/* Tabs */}
-                        <div className="flex border-b border-amber-200/30 bg-gradient-to-r from-amber-100/50 to-stone-100/50 p-3 gap-3">
-                          {serviceCategories.map((category, index) => (
-                            <button
-                              key={index}
-                              onMouseEnter={() => setActiveServiceTab(index)}
-                              className={`flex-1 px-3 py-2 text-xs font-semibold rounded-lg transition-all duration-300 relative overflow-hidden ${
-                                activeServiceTab === index
-                                  ? 'text-white shadow-md scale-105 bg-gradient-to-r from-amber-600 to-amber-700'
-                                  : 'text-amber-800 hover:text-amber-900 hover:bg-amber-100/50'
-                              }`}
-                            >
-                              
-                              <div className="relative z-10 flex flex-col items-center gap-1">
-                                <div className="text-lg">
-                                  {category.icon}
-                                </div>
-                                <span className="text-[10px]">{category.title}</span>
-                              </div>
-                            </button>
-                          ))}
+              {activeMenu === 'services' && (
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 w-[1000px] max-w-[90vw] bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
+                  <div className="bg-gradient-to-r from-gray-50 to-white p-6 border-b border-gray-200">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-1">Our Services</h3>
+                    <p className="text-sm text-gray-600">Comprehensive solutions to elevate your brand</p>
+                  </div>
+                  
+                  <div className="grid grid-cols-4 gap-6 p-8">
+                    {serviceCategories.map((category, index) => (
+                      <div
+                        key={index}
+                        className="bg-white/80 rounded-xl p-5 hover:shadow-lg transition group border border-gray-100 hover:border-blue-200"
+                      >
+                        <div 
+                          className="rounded-xl p-4 mb-4 transition group-hover:scale-110"
+                          style={{ backgroundColor: category.color + '20' }}
+                        >
+                          <div style={{ color: category.color }}>
+                            {category.icon}
+                          </div>
                         </div>
-
-                        {/* Content */}
-                        <div className="p-4">
-                          <div className="mb-4">
-                            <h3 className="text-lg font-bold mb-1 text-amber-900">
-                              {serviceCategories[activeServiceTab].title}
-                            </h3>
-                            <p className="text-xs text-amber-700/80">{serviceCategories[activeServiceTab].description}</p>
-                          </div>
-
-                          <div className="grid grid-cols-2 gap-3 mb-4">
-                            {serviceCategories[activeServiceTab].services.map((service, idx) => (
-                              <a
-                                key={idx}
-                                href="#"
-                                className="group/card p-3 rounded-xl border border-amber-200/60 hover:border-amber-300 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative overflow-hidden bg-gradient-to-br from-white to-amber-50/30"
-                              >
-                                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-amber-600/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
-                                
-                                <div className="relative z-10">
-                                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center text-white text-sm mb-2 group-hover/card:scale-110 transition-transform duration-300 shadow-md">
-                                    {service.icon}
-                                  </div>
-                                  <h4 className="font-bold text-amber-900 mb-1 text-xs">
-                                    {service.name}
-                                  </h4>
-                                  <p className="text-[10px] text-amber-700/70 leading-relaxed">{service.description}</p>
-                                </div>
-                              </a>
-                            ))}
-                          </div>
-
-                          <div className="p-3 rounded-xl bg-gradient-to-r from-amber-700 to-amber-800 text-white flex justify-between items-center shadow-md">
-                            <div>
-                              <p className="font-bold text-sm mb-1">Ready to get started?</p>
-                              <p className="text-xs text-amber-100">Let's bring your vision to life</p>
-                            </div>
-                            <button className="bg-white text-amber-800 px-4 py-2 rounded-full font-bold hover:shadow-lg hover:scale-105 transition-all duration-300 hover:bg-amber-50 text-xs">
-                              Contact Us
-                            </button>
-                          </div>
+                        <h4 className="font-bold text-gray-900 mb-2 text-base">{category.title}</h4>
+                        <p className="text-xs text-gray-600 mb-4">{category.description}</p>
+                        <div className="space-y-2">
+                          {category.services.map((service, idx) => (
+                            <a
+                              key={idx}
+                              href="#"
+                              className="flex items-center gap-2 text-xs text-gray-700 hover:text-blue-600 transition group/item"
+                            >
+                              <div className="text-gray-500 group-hover/item:scale-125 group-hover/item:text-blue-600 transition">
+                                {service.icon}
+                              </div>
+                              <span>{service.name}</span>
+                            </a>
+                          ))}
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Case Studies Mega Menu */}
-                  <div 
-                    className="relative group/menu"
-                    onMouseEnter={() => setActiveMenu('cases')}
-                    onMouseLeave={() => setActiveMenu(null)}
-                  >
-                    <button className={`group px-5 py-2.5 rounded-full font-semibold flex items-center gap-2 transition-all duration-300 relative overflow-hidden ${
-                      isScrolled 
-                        ? 'text-amber-800 hover:text-white' 
-                        : 'text-white hover:text-amber-100'
-                    }`}>
-                      <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
-                      <span className="relative z-10 text-sm">Case Studies</span>
-                      <FaChevronDown className={`relative z-10 text-xs transition-transform duration-300 ${
-                        activeMenu === 'cases' ? 'rotate-180' : ''
-                      }`} />
-                    </button>
+            {/* Case Studies Mega Menu */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setActiveMenu('cases')}
+              onMouseLeave={() => setActiveMenu(null)}
+            >
+              <button className={`transition font-medium flex items-center gap-1 hover:text-blue-600 ${
+                isScrolled ? 'text-gray-800' : 'text-white'
+              }`}>
+                Case Studies
+                <FaChevronDown style={{fontSize: '16px', transform: activeMenu === 'cases' ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s'}} />
+              </button>
 
-                    {/* Mega Menu Dropdown */}
-                    <div 
-                      className={`absolute top-full left-1/2 transform -translate-x-1/2 pt-6 transition-all duration-300 ${
-                        activeMenu === 'cases' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4 pointer-events-none'
-                      }`}
-                      style={{ zIndex: 99999 }}
-                    >
-                      <div className="w-[400px] bg-gradient-to-br from-amber-50 to-stone-50 rounded-2xl shadow-xl border border-amber-200/50 overflow-hidden backdrop-blur-xl">
-                        <div className="flex border-b border-amber-200/30 bg-gradient-to-r from-amber-100/50 to-stone-100/50 p-3 gap-3">
-                          {caseStudyCategories.map((category, index) => (
-                            <button
-                              key={index}
-                              onMouseEnter={() => setActiveCaseTab(index)}
-                              className={`flex-1 px-2 py-2 text-xs font-semibold rounded-lg transition-all duration-300 ${
-                                activeCaseTab === index
-                                  ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md scale-105'
-                                  : 'text-amber-800 hover:bg-amber-100/50 hover:text-amber-900'
-                              }`}
-                            >
-                              <div className="flex items-center justify-center gap-1">
-                                <span className="text-sm">{category.icon}</span>
-                                <span className="text-[10px]">{category.title}</span>
-                              </div>
-                            </button>
-                          ))}
-                        </div>
-
-                        <div className="p-4">
-                          <div className="grid grid-cols-1 gap-3 mb-4">
-                            {caseStudyCategories[activeCaseTab].cases.slice(0, 2).map((caseStudy, idx) => (
-                              <a
-                                key={idx}
-                                href="#"
-                                className="group/card p-3 rounded-xl border border-amber-200/60 hover:border-amber-300 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-white to-amber-50/30 relative overflow-hidden"
-                              >
-                                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-amber-600/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
-                                
-                                <div className="relative z-10">
-                                  <div className="flex items-start gap-3 mb-2">
-                                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center text-white text-sm shadow-md group-hover/card:scale-110 transition-transform duration-300">
-                                      {caseStudyCategories[activeCaseTab].icon}
-                                    </div>
-                                    <div className="flex-1">
-                                      <h4 className="font-bold text-amber-900 text-xs mb-1">{caseStudy.title}</h4>
-                                      <div className="flex items-center gap-2 text-[10px] text-amber-700/70">
-                                        <FaBriefcase className="text-[10px]" />
-                                        <span>{caseStudy.client}</span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-bold bg-gradient-to-r from-amber-600 to-amber-700 text-white">
-                                    <FaChartLine />
-                                    {caseStudy.result}
-                                  </div>
-                                </div>
-                              </a>
-                            ))}
+              {activeMenu === 'cases' && (
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 w-[900px] max-w-[90vw] bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
+                  <div className="bg-gradient-to-r from-gray-50 to-white p-6 border-b border-gray-200">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-1">Success Stories</h3>
+                    <p className="text-sm text-gray-600">Real results from real clients</p>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-6 p-8">
+                    {caseStudies.map((study, index) => (
+                      <a
+                        key={index}
+                        href="#"
+                        className="bg-white/80 rounded-xl p-6 hover:shadow-lg transition group border border-gray-100 hover:border-blue-200"
+                      >
+                        <div 
+                          className="rounded-xl p-4 mb-4 inline-block transition group-hover:scale-110"
+                          style={{ backgroundColor: study.color + '20' }}
+                        >
+                          <div style={{ color: study.color }}>
+                            {study.icon}
                           </div>
+                        </div>
+                        <h4 className="font-bold text-gray-900 mb-2 text-lg">{study.title}</h4>
+                        <div className="flex items-center gap-2 mb-3">
+                          <FaBriefcase style={{fontSize: '16px', color: '#8B7355'}} />
+                          <span className="text-sm text-gray-600">{study.client}</span>
+                        </div>
+                        <div className="flex items-center gap-2 bg-green-50 px-3 py-2 rounded-lg">
+                          <FaChartLine style={{fontSize: '16px', color: '#10B981'}} />
+                          <span className="text-sm font-semibold text-green-700">{study.result}</span>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
 
                           <button className="w-full bg-gradient-to-r from-amber-700 to-amber-800 text-white py-2 rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all duration-300 shadow-md text-xs">
                             View All Success Stories
@@ -369,27 +306,22 @@ const Header = () => {
                     </div>
                   </div>
 
-                  <a href="#" className={`group px-5 py-2.5 rounded-full font-semibold transition-all duration-300 relative overflow-hidden ${
-                    isScrolled ? 'text-amber-800 hover:text-white' : 'text-white hover:text-amber-100'
-                  }`}>
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
-                    <span className="relative z-10 text-sm">About</span>
-                  </a>
-                  
-                  <a href="#" className={`group px-5 py-2.5 rounded-full font-semibold transition-all duration-300 relative overflow-hidden ${
-                    isScrolled ? 'text-amber-800 hover:text-white' : 'text-white hover:text-amber-100'
-                  }`}>
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
-                    <span className="relative z-10 text-sm">Blog</span>
-                  </a>
-                  
-                  <a href="#" className={`group px-5 py-2.5 rounded-full font-semibold transition-all duration-300 relative overflow-hidden ${
-                    isScrolled ? 'text-amber-800 hover:text-white' : 'text-white hover:text-amber-100'
-                  }`}>
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
-                    <span className="relative z-10 text-sm">Contact</span>
-                  </a>
-                </nav>
+            <a href="#" className={`transition font-medium hover:text-blue-600 ${
+              isScrolled ? 'text-gray-800' : 'text-white'
+            }`}>
+              About
+            </a>
+            <a href="#" className={`transition font-medium hover:text-blue-600 ${
+              isScrolled ? 'text-gray-800' : 'text-white'
+            }`}>
+              Blog
+            </a>
+            <a href="#" className={`transition font-medium hover:text-blue-600 ${
+              isScrolled ? 'text-gray-800' : 'text-white'
+            }`}>
+              Contact
+            </a>
+          </nav>
 
                 {/* CTA Button */}
                 <div className="hidden lg:block">

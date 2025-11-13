@@ -140,7 +140,7 @@ const Header = () => {
 
           {/* Center Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
-            <a href="#" className={`transition font-medium hover:text-blue-600 ${
+            <a href="#" className={`transition-all duration-200 font-medium hover:text-blue-600 hover:scale-110 pb-1 border-b-2 border-transparent hover:border-b-2 hover:border-blue-600 ${
               isScrolled ? 'text-gray-800' : 'text-white'
             }`}>
               Home
@@ -152,7 +152,7 @@ const Header = () => {
               onMouseEnter={() => setActiveMenu('services')}
               onMouseLeave={() => setActiveMenu(null)}
             >
-              <button className={`transition font-medium flex items-center gap-1 hover:text-blue-600 ${
+              <button className={`transition-all duration-200 font-medium flex items-center gap-1 hover:text-blue-600 hover:scale-110 pb-1 border-b-2 border-transparent hover:border-b-2 hover:border-blue-600 ${
                 isScrolled ? 'text-gray-800' : 'text-white'
               }`}>
                 Services
@@ -170,11 +170,11 @@ const Header = () => {
                     {serviceCategories.map((category, index) => (
                       <div
                         key={index}
-                        className="bg-white/80 rounded-xl p-5 hover:shadow-lg transition group border border-gray-100 hover:border-blue-200"
+                        className="bg-white/80 rounded-xl p-5 hover:shadow-lg transition group border border-gray-100"
                       >
-                        <div 
+                        <div
                           className="rounded-xl p-4 mb-4 transition group-hover:scale-110"
-                          style={{ backgroundColor: category.color + '20' }}
+                          style={{ backgroundColor: category.color + '08' }}
                         >
                           <div style={{ color: category.color }}>
                             {category.icon}
@@ -187,12 +187,12 @@ const Header = () => {
                             <a
                               key={idx}
                               href="#"
-                              className="flex items-center gap-2 text-xs text-gray-700 hover:text-blue-600 transition group/item"
+                              className="flex items-center gap-3 text-sm text-gray-700 hover:text-blue-600 transition-all duration-200 group/item py-2 px-2 -mx-2 rounded hover:scale-105 border-l-2 border-transparent hover:border-l-2 hover:border-blue-600"
                             >
-                              <div className="text-gray-500 group-hover/item:scale-125 group-hover/item:text-blue-600 transition">
+                              <div className="text-gray-500 group-hover/item:scale-110 group-hover/item:text-blue-600 transition-all duration-200">
                                 {service.icon}
                               </div>
-                              <span>{service.name}</span>
+                              <span className="group-hover/item:font-medium">{service.name}</span>
                             </a>
                           ))}
                         </div>
@@ -219,7 +219,7 @@ const Header = () => {
               onMouseEnter={() => setActiveMenu('cases')}
               onMouseLeave={() => setActiveMenu(null)}
             >
-              <button className={`transition font-medium flex items-center gap-1 hover:text-blue-600 ${
+              <button className={`transition-all duration-200 font-medium flex items-center gap-1 hover:text-blue-600 hover:scale-110 pb-1 border-b-2 border-transparent hover:border-b-2 hover:border-blue-600 ${
                 isScrolled ? 'text-gray-800' : 'text-white'
               }`}>
                 Case Studies
@@ -238,17 +238,17 @@ const Header = () => {
                       <a
                         key={index}
                         href="#"
-                        className="bg-white/80 rounded-xl p-6 hover:shadow-lg transition group border border-gray-100 hover:border-blue-200"
+                        className="bg-white/80 rounded-xl p-6 hover:shadow-lg transition-all duration-200 group border border-gray-100 hover:scale-105 hover:border-l-4 hover:border-l-blue-600"
                       >
-                        <div 
+                        <div
                           className="rounded-xl p-4 mb-4 inline-block transition group-hover:scale-110"
-                          style={{ backgroundColor: study.color + '20' }}
+                          style={{ backgroundColor: study.color + '08' }}
                         >
                           <div style={{ color: study.color }}>
                             {study.icon}
                           </div>
                         </div>
-                        <h4 className="font-bold text-gray-900 mb-2 text-lg">{study.title}</h4>
+                        <h4 className="font-bold text-gray-900 mb-2 text-lg group-hover:text-xl transition-all">{study.title}</h4>
                         <div className="flex items-center gap-2 mb-3">
                           <FaBriefcase style={{fontSize: '16px', color: '#8B7355'}} />
                           <span className="text-sm text-gray-600">{study.client}</span>
@@ -270,17 +270,17 @@ const Header = () => {
               )}
             </div>
 
-            <a href="#" className={`transition font-medium hover:text-blue-600 ${
+            <a href="#" className={`transition-all duration-200 font-medium hover:text-blue-600 hover:scale-110 pb-1 border-b-2 border-transparent hover:border-b-2 hover:border-blue-600 ${
               isScrolled ? 'text-gray-800' : 'text-white'
             }`}>
               About
             </a>
-            <a href="#" className={`transition font-medium hover:text-blue-600 ${
+            <a href="#" className={`transition-all duration-200 font-medium hover:text-blue-600 hover:scale-110 pb-1 border-b-2 border-transparent hover:border-b-2 hover:border-blue-600 ${
               isScrolled ? 'text-gray-800' : 'text-white'
             }`}>
               Blog
             </a>
-            <a href="#" className={`transition font-medium hover:text-blue-600 ${
+            <a href="#" className={`transition-all duration-200 font-medium hover:text-blue-600 hover:scale-110 pb-1 border-b-2 border-transparent hover:border-b-2 hover:border-blue-600 ${
               isScrolled ? 'text-gray-800' : 'text-white'
             }`}>
               Contact

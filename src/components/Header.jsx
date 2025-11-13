@@ -1,338 +1,501 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { 
   FaChevronDown, FaBullseye, FaChartLine, FaSearch, FaShare, FaEnvelope, 
   FaChartBar, FaBullhorn, FaPencilAlt, FaMobile, FaShoppingCart, FaGlobe, 
-  FaBars, FaTimes, FaPalette, FaCode, FaBolt, FaUsers, FaAward, 
+  FaBars, FaTimes, FaPalette, FaCode, FaBolt, FaUsers,
   FaBriefcase, FaVideo, FaCamera, FaDesktop, FaMicrochip, 
-  FaDatabase, FaCloud
+  FaDatabase, FaCloud, FaRocket, FaCrown, FaMagic
 } from 'react-icons/fa';
 
 const Header = () => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeServiceTab, setActiveServiceTab] = useState(0);
+  const [activeCaseTab, setActiveCaseTab] = useState(0);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const headerRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 100);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleMouseMove = (e) => {
+    if (headerRef.current) {
+      const rect = headerRef.current.getBoundingClientRect();
+      setMousePosition({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      });
+    }
+  };
+
   const serviceCategories = [
     {
-      icon: <FaPalette style={{fontSize: '48px'}} />,
+      icon: <FaPalette />,
       title: "Design & Branding",
       description: "Create memorable visual identities",
-      color: "#D4A574",
+      gradient: "from-pink-500 via-purple-500 to-indigo-500",
       services: [
-        { icon: <FaBullseye style={{fontSize: '16px'}} />, name: "Brand Strategy" },
-        { icon: <FaPalette style={{fontSize: '16px'}} />, name: "Logo Design" },
-        { icon: <FaPencilAlt style={{fontSize: '16px'}} />, name: "UI/UX Design" },
-        { icon: <FaDesktop style={{fontSize: '16px'}} />, name: "Web Design" },
-        { icon: <FaMobile style={{fontSize: '16px'}} />, name: "Mobile App Design" }
+        { icon: <FaBullseye />, name: "Brand Strategy", description: "Define your brand essence" },
+        { icon: <FaPalette />, name: "Logo Design", description: "Iconic visual identity" },
+        { icon: <FaPencilAlt />, name: "UI/UX Design", description: "User-centric experiences" },
+        { icon: <FaDesktop />, name: "Web Design", description: "Beautiful interfaces" },
+        { icon: <FaMobile />, name: "Mobile App Design", description: "Touch-optimized design" },
+        { icon: <FaCamera />, name: "Photography", description: "Professional imagery" }
       ]
     },
     {
-      icon: <FaCode style={{fontSize: '48px'}} />,
+      icon: <FaCode />,
       title: "Development",
       description: "Build powerful digital solutions",
-      color: "#B8956A",
+      gradient: "from-blue-500 via-cyan-500 to-teal-500",
       services: [
-        { icon: <FaGlobe style={{fontSize: '16px'}} />, name: "Web Development" },
-        { icon: <FaMobile style={{fontSize: '16px'}} />, name: "Mobile Apps" },
-        { icon: <FaShoppingCart style={{fontSize: '16px'}} />, name: "E-commerce" },
-        { icon: <FaDatabase style={{fontSize: '16px'}} />, name: "CMS Development" },
-        { icon: <FaCloud style={{fontSize: '16px'}} />, name: "Cloud Solutions" }
+        { icon: <FaGlobe />, name: "Web Development", description: "Custom web solutions" },
+        { icon: <FaMobile />, name: "Mobile Apps", description: "iOS & Android apps" },
+        { icon: <FaShoppingCart />, name: "E-commerce", description: "Online stores" },
+        { icon: <FaDatabase />, name: "CMS Development", description: "Content management" },
+        { icon: <FaCloud />, name: "Cloud Solutions", description: "Scalable infrastructure" },
+        { icon: <FaCode />, name: "Custom Software", description: "Tailored applications" }
       ]
     },
     {
-      icon: <FaChartLine style={{fontSize: '48px'}} />,
+      icon: <FaChartLine />,
       title: "Digital Marketing",
       description: "Grow your online presence",
-      color: "#9C7F5C",
+      gradient: "from-orange-500 via-red-500 to-pink-500",
       services: [
-        { icon: <FaSearch style={{fontSize: '16px'}} />, name: "SEO Optimization" },
-        { icon: <FaBullhorn style={{fontSize: '16px'}} />, name: "Google Ads & PPC" },
-        { icon: <FaShare style={{fontSize: '16px'}} />, name: "Social Media Marketing" },
-        { icon: <FaEnvelope style={{fontSize: '16px'}} />, name: "Email Marketing" },
-        { icon: <FaChartBar style={{fontSize: '16px'}} />, name: "Analytics & Insights" },
-        { icon: <FaBolt style={{fontSize: '16px'}} />, name: "Marketing Automation" },
-        { icon: <FaBullseye style={{fontSize: '16px'}} />, name: "Conversion Rate Optimization" },
-        { icon: <FaGlobe style={{fontSize: '16px'}} />, name: "Local SEO" },
-        { icon: <FaUsers style={{fontSize: '16px'}} />, name: "Influencer Marketing" },
-        { icon: <FaVideo style={{fontSize: '16px'}} />, name: "Video Marketing" }
+        { icon: <FaSearch />, name: "SEO Optimization", description: "Rank higher on Google" },
+        { icon: <FaBullhorn />, name: "Google Ads & PPC", description: "Paid advertising" },
+        { icon: <FaShare />, name: "Social Media Marketing", description: "Engage your audience" },
+        { icon: <FaEnvelope />, name: "Email Marketing", description: "Nurture campaigns" },
+        { icon: <FaChartBar />, name: "Analytics & Insights", description: "Data-driven decisions" },
+        { icon: <FaBolt />, name: "Marketing Automation", description: "Workflow optimization" }
       ]
     },
     {
-      icon: <FaVideo style={{fontSize: '48px'}} />,
+      icon: <FaVideo />,
       title: "Content & Media",
       description: "Engage with compelling content",
-      color: "#8B7355",
+      gradient: "from-purple-500 via-violet-500 to-fuchsia-500",
       services: [
-        { icon: <FaPencilAlt style={{fontSize: '16px'}} />, name: "Content Writing" },
-        { icon: <FaVideo style={{fontSize: '16px'}} />, name: "Video Production" },
-        { icon: <FaCamera style={{fontSize: '16px'}} />, name: "Photography" },
-        { icon: <FaPencilAlt style={{fontSize: '16px'}} />, name: "Copywriting" },
-        { icon: <FaMicrochip style={{fontSize: '16px'}} />, name: "Animation & Motion" }
+        { icon: <FaPencilAlt />, name: "Content Writing", description: "Compelling copy" },
+        { icon: <FaVideo />, name: "Video Production", description: "Visual storytelling" },
+        { icon: <FaCamera />, name: "Photography", description: "Professional shoots" },
+        { icon: <FaMicrochip />, name: "Animation & Motion", description: "Dynamic visuals" },
+        { icon: <FaBullhorn />, name: "Podcast Production", description: "Audio content" },
+        { icon: <FaGlobe />, name: "Blog Management", description: "Content strategy" }
       ]
     }
   ];
 
-  const caseStudies = [
+  const caseStudyCategories = [
     {
-      icon: <FaShoppingCart style={{fontSize: '32px'}} />,
-      title: "E-commerce Success",
-      client: "Fashion Retailer",
-      result: "300% Revenue Growth",
-      color: "#D4A574"
+      title: "E-commerce",
+      icon: <FaShoppingCart />,
+      color: "#3B82F6",
+      cases: [
+        { title: "Fashion Retailer Transformation", client: "StyleCo", result: "300% Revenue Growth", industry: "Fashion" },
+        { title: "Beauty Brand Launch", client: "GlowUp", result: "150% Sales Increase", industry: "Beauty" },
+        { title: "Sports Equipment Store", client: "FitGear", result: "250% Online Sales", industry: "Sports" },
+        { title: "Electronics Marketplace", client: "TechHub", result: "400% Traffic Growth", industry: "Electronics" }
+      ]
     },
     {
-      icon: <FaChartLine style={{fontSize: '32px'}} />,
-      title: "Brand Transformation",
-      client: "Tech Startup",
-      result: "500% Brand Awareness",
-      color: "#B8956A"
+      title: "SaaS & Tech",
+      icon: <FaCode />,
+      color: "#8B5CF6",
+      cases: [
+        { title: "Startup Growth Strategy", client: "InnovateTech", result: "500% User Growth", industry: "SaaS" },
+        { title: "App Store Optimization", client: "MobileFirst", result: "10x Downloads", industry: "Mobile" },
+        { title: "B2B Platform Launch", client: "BusinessPro", result: "200% Lead Generation", industry: "B2B" },
+        { title: "AI Tool Marketing", client: "SmartAI", result: "300% Brand Awareness", industry: "AI" }
+      ]
     },
     {
-      icon: <FaUsers style={{fontSize: '32px'}} />,
-      title: "Social Media Campaign",
-      client: "Food & Beverage",
-      result: "2M+ Engagements",
-      color: "#9C7F5C"
+      title: "Healthcare",
+      icon: <FaUsers />,
+      color: "#10B981",
+      cases: [
+        { title: "Hospital Digital Transformation", client: "MedCenter", result: "85% Patient Satisfaction", industry: "Healthcare" },
+        { title: "Telehealth Platform", client: "CareConnect", result: "300% User Adoption", industry: "Telehealth" },
+        { title: "Medical Device Launch", client: "HealthTech", result: "150% Market Share", industry: "MedTech" },
+        { title: "Wellness App Success", client: "WellBeing", result: "2M+ Active Users", industry: "Wellness" }
+      ]
     },
     {
-      icon: <FaAward style={{fontSize: '32px'}} />,
-      title: "Website Redesign",
-      client: "Healthcare Provider",
-      result: "85% User Satisfaction",
-      color: "#8B7355"
+      title: "Finance",
+      icon: <FaChartLine />,
+      color: "#F59E0B",
+      cases: [
+        { title: "Fintech App Growth", client: "PaySmart", result: "500K+ Downloads", industry: "Fintech" },
+        { title: "Investment Platform", client: "WealthGrow", result: "200% Client Base", industry: "Investment" },
+        { title: "Banking Digital Strategy", client: "SecureBank", result: "90% Digital Adoption", industry: "Banking" },
+        { title: "Crypto Exchange Launch", client: "CoinTrader", result: "1M+ Users", industry: "Cryptocurrency" }
+      ]
     }
   ];
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-white/95 backdrop-blur-xl shadow-lg' 
-          : 'bg-transparent'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className={`p-2 rounded-lg transition-all ${
+    <>
+      <header 
+        ref={headerRef}
+        onMouseMove={handleMouseMove}
+        className={`w-full z-[9999] transition-all duration-700 ease-out ${
+          isScrolled ? 'fixed top-0 left-0' : 'absolute top-8'
+        }`}
+      >
+        <div className={`${isScrolled ? 'container mx-auto px-4 py-2' : 'w-[90%] max-w-6xl mx-auto'}`}>
+          <div 
+            className={`relative rounded-2xl border shadow-lg backdrop-blur-md overflow-visible transition-all duration-700 ${
               isScrolled 
-                ? 'bg-blue-600' 
-                : 'bg-white/10 backdrop-blur-md'
-            }`}>
-              <FaBolt style={{fontSize: '20px', color: 'white'}} />
-            </div>
-            <h1 className={`text-xl font-bold transition-all ${
-              isScrolled ? 'text-gray-900' : 'text-white'
-            }`}>
-              MarketingPro
-            </h1>
-          </div>
+                ? 'bg-amber-50/95 border-amber-200/60 shadow-amber-900/20' 
+                : 'bg-amber-100/20 border-amber-200/40 shadow-amber-900/30'
+            }`}
+          >
 
-          {/* Center Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
-            <a href="#" className={`transition font-medium hover:text-blue-600 ${
-              isScrolled ? 'text-gray-800' : 'text-white'
-            }`}>
-              Home
-            </a>
-            
-            {/* Services Mega Menu */}
-            <div 
-              className="relative"
-              onMouseEnter={() => setActiveMenu('services')}
-              onMouseLeave={() => setActiveMenu(null)}
-            >
-              <button className={`transition font-medium flex items-center gap-1 hover:text-blue-600 ${
-                isScrolled ? 'text-gray-800' : 'text-white'
-              }`}>
-                Services
-                <FaChevronDown style={{fontSize: '16px', transform: activeMenu === 'services' ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s'}} />
-              </button>
-
-              {activeMenu === 'services' && (
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 w-[1000px] max-w-[90vw] bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
-                  <div className="bg-gradient-to-r from-gray-50 to-white p-6 border-b border-gray-200">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-1">Our Services</h3>
-                    <p className="text-sm text-gray-600">Comprehensive solutions to elevate your brand</p>
+            <div className="relative px-8 py-4">
+              <div className="flex items-center justify-between gap-8">
+                {/* Logo */}
+                <div className="flex items-center gap-3 group cursor-pointer">
+                  <div className={`relative p-2.5 rounded-xl transition-all duration-500 group-hover:scale-110 ${
+                    isScrolled 
+                      ? 'bg-gradient-to-br from-amber-600 to-amber-700 shadow-lg shadow-amber-500/30' 
+                      : 'bg-gradient-to-br from-amber-700 to-amber-800'
+                  }`}>
+                    <FaCrown className={`text-xl ${isScrolled ? 'text-amber-100' : 'text-amber-100'} drop-shadow-lg`} />
                   </div>
                   
-                  <div className="grid grid-cols-4 gap-6 p-8">
-                    {serviceCategories.map((category, index) => (
-                      <div
-                        key={index}
-                        className="bg-white/80 rounded-xl p-5 hover:shadow-lg transition group border border-gray-100 hover:border-blue-200"
-                      >
-                        <div 
-                          className="rounded-xl p-4 mb-4 transition group-hover:scale-110"
-                          style={{ backgroundColor: category.color + '20' }}
-                        >
-                          <div style={{ color: category.color }}>
-                            {category.icon}
-                          </div>
-                        </div>
-                        <h4 className="font-bold text-gray-900 mb-2 text-base">{category.title}</h4>
-                        <p className="text-xs text-gray-600 mb-4">{category.description}</p>
-                        <div className="space-y-2">
-                          {category.services.map((service, idx) => (
-                            <a
-                              key={idx}
-                              href="#"
-                              className="flex items-center gap-2 text-xs text-gray-700 hover:text-blue-600 transition group/item"
+                  <div>
+                    <h1 className={`text-lg font-bold transition-all duration-500 ${
+                      isScrolled 
+                        ? 'text-amber-800' 
+                        : 'text-white'
+                    }`}>
+                      Branding Pioneers
+                    </h1>
+                    <div className={`text-xs font-medium flex items-center gap-1.5 ${
+                      isScrolled ? 'text-amber-600' : 'text-amber-200'
+                    }`}>
+                      <FaRocket className="text-xs" />
+                      Digital Excellence
+                    </div>
+                  </div>
+                </div>
+
+                {/* Center Navigation */}
+                <nav className="hidden lg:flex items-center gap-1">
+                  {/* Services Mega Menu */}
+                  <div 
+                    className="relative group/menu"
+                    onMouseEnter={() => setActiveMenu('services')}
+                    onMouseLeave={() => setActiveMenu(null)}
+                  >
+                    <button className={`group px-5 py-2.5 rounded-full font-semibold flex items-center gap-2 transition-all duration-300 relative overflow-hidden ${
+                      isScrolled 
+                        ? 'text-amber-800 hover:text-white' 
+                        : 'text-white hover:text-amber-100'
+                    }`}>
+                      <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
+                      <span className="relative z-10 text-sm">Services</span>
+                      <FaChevronDown className={`relative z-10 text-xs transition-transform duration-300 ${
+                        activeMenu === 'services' ? 'rotate-180' : ''
+                      }`} />
+                    </button>
+
+                    {/* Mega Menu Dropdown */}
+                    <div 
+                      className={`absolute top-full left-1/2 transform -translate-x-1/2 pt-6 transition-all duration-300 ${
+                        activeMenu === 'services' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4 pointer-events-none'
+                      }`}
+                      style={{ zIndex: 99999 }}
+                    >
+                      <div className="w-[450px] bg-gradient-to-br from-amber-50 to-stone-50 rounded-2xl shadow-xl border border-amber-200/50 overflow-hidden backdrop-blur-xl">
+                        {/* Tabs */}
+                        <div className="flex border-b border-amber-200/30 bg-gradient-to-r from-amber-100/50 to-stone-100/50 p-3 gap-3">
+                          {serviceCategories.map((category, index) => (
+                            <button
+                              key={index}
+                              onMouseEnter={() => setActiveServiceTab(index)}
+                              className={`flex-1 px-3 py-2 text-xs font-semibold rounded-lg transition-all duration-300 relative overflow-hidden ${
+                                activeServiceTab === index
+                                  ? 'text-white shadow-md scale-105 bg-gradient-to-r from-amber-600 to-amber-700'
+                                  : 'text-amber-800 hover:text-amber-900 hover:bg-amber-100/50'
+                              }`}
                             >
-                              <div className="text-gray-500 group-hover/item:scale-125 group-hover/item:text-blue-600 transition">
-                                {service.icon}
+                              
+                              <div className="relative z-10 flex flex-col items-center gap-1">
+                                <div className="text-lg">
+                                  {category.icon}
+                                </div>
+                                <span className="text-[10px]">{category.title}</span>
                               </div>
-                              <span>{service.name}</span>
-                            </a>
+                            </button>
                           ))}
                         </div>
-                      </div>
-                    ))}
-                  </div>
 
-                  <div className="bg-[#F5EFE7] px-8 py-5 flex justify-between items-center">
-                    <div>
-                      <p className="text-sm font-semibold text-[#5C4B37] mb-1">Need a custom solution?</p>
-                      <p className="text-xs text-[#8B7355]">Let us discuss your unique requirements</p>
-                    </div>
-                    <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg hover:shadow-xl transition font-medium">
-                      Get Started
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+                        {/* Content */}
+                        <div className="p-4">
+                          <div className="mb-4">
+                            <h3 className="text-lg font-bold mb-1 text-amber-900">
+                              {serviceCategories[activeServiceTab].title}
+                            </h3>
+                            <p className="text-xs text-amber-700/80">{serviceCategories[activeServiceTab].description}</p>
+                          </div>
 
-            {/* Case Studies Mega Menu */}
-            <div 
-              className="relative"
-              onMouseEnter={() => setActiveMenu('cases')}
-              onMouseLeave={() => setActiveMenu(null)}
-            >
-              <button className={`transition font-medium flex items-center gap-1 hover:text-blue-600 ${
-                isScrolled ? 'text-gray-800' : 'text-white'
-              }`}>
-                Case Studies
-                <FaChevronDown style={{fontSize: '16px', transform: activeMenu === 'cases' ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s'}} />
-              </button>
+                          <div className="grid grid-cols-2 gap-3 mb-4">
+                            {serviceCategories[activeServiceTab].services.map((service, idx) => (
+                              <a
+                                key={idx}
+                                href="#"
+                                className="group/card p-3 rounded-xl border border-amber-200/60 hover:border-amber-300 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative overflow-hidden bg-gradient-to-br from-white to-amber-50/30"
+                              >
+                                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-amber-600/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
+                                
+                                <div className="relative z-10">
+                                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center text-white text-sm mb-2 group-hover/card:scale-110 transition-transform duration-300 shadow-md">
+                                    {service.icon}
+                                  </div>
+                                  <h4 className="font-bold text-amber-900 mb-1 text-xs">
+                                    {service.name}
+                                  </h4>
+                                  <p className="text-[10px] text-amber-700/70 leading-relaxed">{service.description}</p>
+                                </div>
+                              </a>
+                            ))}
+                          </div>
 
-              {activeMenu === 'cases' && (
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 w-[900px] max-w-[90vw] bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
-                  <div className="bg-gradient-to-r from-gray-50 to-white p-6 border-b border-gray-200">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-1">Success Stories</h3>
-                    <p className="text-sm text-gray-600">Real results from real clients</p>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-6 p-8">
-                    {caseStudies.map((study, index) => (
-                      <a
-                        key={index}
-                        href="#"
-                        className="bg-white/80 rounded-xl p-6 hover:shadow-lg transition group border border-gray-100 hover:border-blue-200"
-                      >
-                        <div 
-                          className="rounded-xl p-4 mb-4 inline-block transition group-hover:scale-110"
-                          style={{ backgroundColor: study.color + '20' }}
-                        >
-                          <div style={{ color: study.color }}>
-                            {study.icon}
+                          <div className="p-3 rounded-xl bg-gradient-to-r from-amber-700 to-amber-800 text-white flex justify-between items-center shadow-md">
+                            <div>
+                              <p className="font-bold text-sm mb-1">Ready to get started?</p>
+                              <p className="text-xs text-amber-100">Let's bring your vision to life</p>
+                            </div>
+                            <button className="bg-white text-amber-800 px-4 py-2 rounded-full font-bold hover:shadow-lg hover:scale-105 transition-all duration-300 hover:bg-amber-50 text-xs">
+                              Contact Us
+                            </button>
                           </div>
                         </div>
-                        <h4 className="font-bold text-gray-900 mb-2 text-lg">{study.title}</h4>
-                        <div className="flex items-center gap-2 mb-3">
-                          <FaBriefcase style={{fontSize: '16px', color: '#8B7355'}} />
-                          <span className="text-sm text-gray-600">{study.client}</span>
-                        </div>
-                        <div className="flex items-center gap-2 bg-green-50 px-3 py-2 rounded-lg">
-                          <FaChartLine style={{fontSize: '16px', color: '#10B981'}} />
-                          <span className="text-sm font-semibold text-green-700">{study.result}</span>
-                        </div>
-                      </a>
-                    ))}
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 px-8 py-5 text-center">
-                    <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg hover:shadow-xl transition font-medium">
-                      View All Case Studies
+                  {/* Case Studies Mega Menu */}
+                  <div 
+                    className="relative group/menu"
+                    onMouseEnter={() => setActiveMenu('cases')}
+                    onMouseLeave={() => setActiveMenu(null)}
+                  >
+                    <button className={`group px-5 py-2.5 rounded-full font-semibold flex items-center gap-2 transition-all duration-300 relative overflow-hidden ${
+                      isScrolled 
+                        ? 'text-amber-800 hover:text-white' 
+                        : 'text-white hover:text-amber-100'
+                    }`}>
+                      <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
+                      <span className="relative z-10 text-sm">Case Studies</span>
+                      <FaChevronDown className={`relative z-10 text-xs transition-transform duration-300 ${
+                        activeMenu === 'cases' ? 'rotate-180' : ''
+                      }`} />
                     </button>
+
+                    {/* Mega Menu Dropdown */}
+                    <div 
+                      className={`absolute top-full left-1/2 transform -translate-x-1/2 pt-6 transition-all duration-300 ${
+                        activeMenu === 'cases' ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4 pointer-events-none'
+                      }`}
+                      style={{ zIndex: 99999 }}
+                    >
+                      <div className="w-[400px] bg-gradient-to-br from-amber-50 to-stone-50 rounded-2xl shadow-xl border border-amber-200/50 overflow-hidden backdrop-blur-xl">
+                        <div className="flex border-b border-amber-200/30 bg-gradient-to-r from-amber-100/50 to-stone-100/50 p-3 gap-3">
+                          {caseStudyCategories.map((category, index) => (
+                            <button
+                              key={index}
+                              onMouseEnter={() => setActiveCaseTab(index)}
+                              className={`flex-1 px-2 py-2 text-xs font-semibold rounded-lg transition-all duration-300 ${
+                                activeCaseTab === index
+                                  ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-md scale-105'
+                                  : 'text-amber-800 hover:bg-amber-100/50 hover:text-amber-900'
+                              }`}
+                            >
+                              <div className="flex items-center justify-center gap-1">
+                                <span className="text-sm">{category.icon}</span>
+                                <span className="text-[10px]">{category.title}</span>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+
+                        <div className="p-4">
+                          <div className="grid grid-cols-1 gap-3 mb-4">
+                            {caseStudyCategories[activeCaseTab].cases.slice(0, 2).map((caseStudy, idx) => (
+                              <a
+                                key={idx}
+                                href="#"
+                                className="group/card p-3 rounded-xl border border-amber-200/60 hover:border-amber-300 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-white to-amber-50/30 relative overflow-hidden"
+                              >
+                                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-amber-600/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300"></div>
+                                
+                                <div className="relative z-10">
+                                  <div className="flex items-start gap-3 mb-2">
+                                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center text-white text-sm shadow-md group-hover/card:scale-110 transition-transform duration-300">
+                                      {caseStudyCategories[activeCaseTab].icon}
+                                    </div>
+                                    <div className="flex-1">
+                                      <h4 className="font-bold text-amber-900 text-xs mb-1">{caseStudy.title}</h4>
+                                      <div className="flex items-center gap-2 text-[10px] text-amber-700/70">
+                                        <FaBriefcase className="text-[10px]" />
+                                        <span>{caseStudy.client}</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-bold bg-gradient-to-r from-amber-600 to-amber-700 text-white">
+                                    <FaChartLine />
+                                    {caseStudy.result}
+                                  </div>
+                                </div>
+                              </a>
+                            ))}
+                          </div>
+
+                          <button className="w-full bg-gradient-to-r from-amber-700 to-amber-800 text-white py-2 rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all duration-300 shadow-md text-xs">
+                            View All Success Stories
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+
+                  <a href="#" className={`group px-5 py-2.5 rounded-full font-semibold transition-all duration-300 relative overflow-hidden ${
+                    isScrolled ? 'text-amber-800 hover:text-white' : 'text-white hover:text-amber-100'
+                  }`}>
+                    <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
+                    <span className="relative z-10 text-sm">About</span>
+                  </a>
+                  
+                  <a href="#" className={`group px-5 py-2.5 rounded-full font-semibold transition-all duration-300 relative overflow-hidden ${
+                    isScrolled ? 'text-amber-800 hover:text-white' : 'text-white hover:text-amber-100'
+                  }`}>
+                    <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
+                    <span className="relative z-10 text-sm">Blog</span>
+                  </a>
+                  
+                  <a href="#" className={`group px-5 py-2.5 rounded-full font-semibold transition-all duration-300 relative overflow-hidden ${
+                    isScrolled ? 'text-amber-800 hover:text-white' : 'text-white hover:text-amber-100'
+                  }`}>
+                    <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-amber-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
+                    <span className="relative z-10 text-sm">Contact</span>
+                  </a>
+                </nav>
+
+                {/* CTA Button */}
+                <div className="hidden lg:block">
+                  <button className="relative group bg-gradient-to-r from-amber-700 to-amber-800 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-2xl hover:shadow-amber-500/50 transition-all duration-500 font-bold text-sm hover:scale-110 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-amber-800 to-amber-900 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    
+                    <span className="relative z-10 flex items-center gap-2">
+                      <FaRocket className="group-hover:rotate-45 transition-transform duration-500" />
+                      Get Started
+                      <FaMagic className="group-hover:rotate-180 transition-transform duration-500" />
+                    </span>
+                  </button>
                 </div>
-              )}
+
+                {/* Mobile Menu Button */}
+                <button 
+                  className={`lg:hidden p-2 rounded-xl transition-all duration-300 ${
+                    isScrolled ? 'text-amber-800 hover:bg-amber-100' : 'text-white hover:bg-white/20'
+                  }`}
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                >
+                  {isMobileMenuOpen ? <FaTimes className="text-xl" /> : <FaBars className="text-xl" />}
+                </button>
+              </div>
             </div>
 
-            <a href="#" className={`transition font-medium hover:text-blue-600 ${
-              isScrolled ? 'text-gray-800' : 'text-white'
-            }`}>
-              About
-            </a>
-            <a href="#" className={`transition font-medium hover:text-blue-600 ${
-              isScrolled ? 'text-gray-800' : 'text-white'
-            }`}>
-              Blog
-            </a>
-            <a href="#" className={`transition font-medium hover:text-blue-600 ${
-              isScrolled ? 'text-gray-800' : 'text-white'
-            }`}>
-              Contact
-            </a>
-          </nav>
-
-          {/* CTA Button */}
-          <div className="hidden lg:flex items-center">
-            <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full hover:shadow-xl transition font-medium">
-              Get Started
-            </button>
+            {/* Mobile Menu */}
+            {isMobileMenuOpen && (
+              <div className="lg:hidden bg-white border-t border-gray-200 px-6 py-6 rounded-b-3xl animate-slideDown">
+                <nav className="flex flex-col gap-4">
+                  <a href="#" className="text-gray-800 hover:text-purple-600 transition font-semibold py-2 px-4 rounded-lg hover:bg-purple-50">
+                    Services
+                  </a>
+                  <a href="#" className="text-gray-800 hover:text-blue-600 transition font-semibold py-2 px-4 rounded-lg hover:bg-blue-50">
+                    Case Studies
+                  </a>
+                  <a href="#" className="text-gray-800 hover:text-green-600 transition font-semibold py-2 px-4 rounded-lg hover:bg-green-50">
+                    About
+                  </a>
+                  <a href="#" className="text-gray-800 hover:text-orange-600 transition font-semibold py-2 px-4 rounded-lg hover:bg-orange-50">
+                    Blog
+                  </a>
+                  <a href="#" className="text-gray-800 hover:text-pink-600 transition font-semibold py-2 px-4 rounded-lg hover:bg-pink-50">
+                    Contact
+                  </a>
+                  <button className="bg-gradient-to-r from-amber-700 to-amber-800 text-white px-6 py-3 rounded-full font-bold hover:shadow-lg transition mt-2">
+                    Get Started
+                  </button>
+                </nav>
+              </div>
+            )}
           </div>
-
-          {/* Mobile Menu Button */}
-          <button 
-            className={`lg:hidden transition ${isScrolled ? 'text-gray-800' : 'text-white'}`}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <FaTimes style={{fontSize: '24px'}} /> : <FaBars style={{fontSize: '24px'}} />}
-          </button>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden bg-white/95 border-t border-gray-200 px-6 py-4 rounded-b-2xl">
-          <nav className="flex flex-col gap-4">
-            <a href="#" className="text-gray-800 hover:text-blue-600 transition font-medium py-2">
-              Home
-            </a>
-            <a href="#" className="text-gray-800 hover:text-blue-600 transition font-medium py-2">
-              Services
-            </a>
-            <a href="#" className="text-gray-800 hover:text-blue-600 transition font-medium py-2">
-              Case Studies
-            </a>
-            <a href="#" className="text-gray-800 hover:text-blue-600 transition font-medium py-2">
-              About
-            </a>
-            <a href="#" className="text-gray-800 hover:text-blue-600 transition font-medium py-2">
-              Blog
-            </a>
-            <a href="#" className="text-gray-800 hover:text-blue-600 transition font-medium py-2">
-              Contact
-            </a>
-            <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-full hover:shadow-xl transition font-medium mt-2">
-              Get Started
-            </button>
-          </nav>
-        </div>
-      )}
-    </header>
+      {/* Add custom animations */}
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes slideDown {
+          from {
+            max-height: 0;
+            opacity: 0;
+          }
+          to {
+            max-height: 500px;
+            opacity: 1;
+          }
+        }
+
+        @keyframes shimmer {
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(100%);
+          }
+        }
+
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+
+        .animate-slideDown {
+          animation: slideDown 0.3s ease-out;
+        }
+
+        .animate-shimmer {
+          animation: shimmer 3s infinite;
+        }
+
+        .delay-300 {
+          animation-delay: 300ms;
+        }
+      `}</style>
+    </>
   );
 };
 

@@ -8,24 +8,24 @@ const ClientShowcase = () => {
   const filters = ['All', 'Technology', 'Media', 'E-commerce', 'Healthcare', 'Education'];
 
   const clients = [
-    { name: 'Realme', logo: '/logos/realme.png', category: 'Technology' },
-    { name: 'ZeeTV', logo: '/logos/zeetv.png', category: 'Media' },
-    { name: 'Dance Plus', logo: '/logos/danceplus.png', category: 'Media' },
-    { name: 'Apollo Tyres', logo: '/logos/apollo.png', category: 'Technology' },
-    { name: 'Mojarto', logo: '/logos/mojarto.png', category: 'E-commerce' },
-    { name: 'Oda Class', logo: '/logos/odaclass.png', category: 'Education' },
-    { name: 'Usha', logo: '/logos/usha.png', category: 'Technology' },
-    { name: 'Cuckoo Korea', logo: '/logos/cuckoo.png', category: 'E-commerce' },
-    { name: 'DBC', logo: '/logos/dbc.png', category: 'Technology' },
-    { name: 'NDTV', logo: '/logos/ndtv.png', category: 'Media' },
-    { name: 'Sailax Global', logo: '/logos/sailax.png', category: 'E-commerce' },
-    { name: 'Medanta', logo: '/logos/medanta.png', category: 'Healthcare' },
-    { name: 'Artemis Hospital', logo: '/logos/artemis.png', category: 'Healthcare' },
-    { name: 'Telelac', logo: '/logos/telelac.png', category: 'Healthcare' },
-    { name: 'Janani Hospital', logo: '/logos/janani.png', category: 'Healthcare' },
-    { name: 'Amrita Hospital', logo: '/logos/amrita.png', category: 'Healthcare' },
-    { name: 'Shopify Partner', logo: '/logos/shopify.png', category: 'E-commerce' },
-    { name: 'WordPress', logo: '/logos/wordpress.png', category: 'Technology' },
+    { name: 'Realme', category: 'Technology' },
+    { name: 'ZeeTV', category: 'Media' },
+    { name: 'Dance Plus', category: 'Media' },
+    { name: 'Apollo Tyres', category: 'Technology' },
+    { name: 'Mojarto', category: 'E-commerce' },
+    { name: 'Oda Class', category: 'Education' },
+    { name: 'Usha', category: 'Technology' },
+    { name: 'Cuckoo Korea', category: 'E-commerce' },
+    { name: 'DBC', category: 'Technology' },
+    { name: 'NDTV', category: 'Media' },
+    { name: 'Sailax Global', category: 'E-commerce' },
+    { name: 'Medanta', category: 'Healthcare' },
+    { name: 'Artemis Hospital', category: 'Healthcare' },
+    { name: 'Telelac', category: 'Healthcare' },
+    { name: 'Janani Hospital', category: 'Healthcare' },
+    { name: 'Amrita Hospital', category: 'Healthcare' },
+    { name: 'Shopify Partner', category: 'E-commerce' },
+    { name: 'WordPress', category: 'Technology' },
   ];
 
   const filteredClients = activeFilter === 'All' 
@@ -233,21 +233,18 @@ const ClientShowcase = () => {
                     {/* Hover Effect Background */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     
-                    {/* Logo Container - BIGGER SIZE */}
+                    {/* Logo Container - Text-based design */}
                     <div className="relative z-10 w-full h-full flex items-center justify-center">
-                      <img
-                        src={client.logo}
-                        alt={client.name}
-                        className="max-w-[85%] max-h-[85%] object-contain filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 group-hover:scale-110"
-                        onError={(e) => {
-                          // Fallback to text if image doesn't load
-                          e.target.style.display = 'none';
-                          const textSpan = document.createElement('span');
-                          textSpan.className = 'text-white text-base font-semibold text-center';
-                          textSpan.textContent = client.name;
-                          e.target.parentElement.appendChild(textSpan);
-                        }}
-                      />
+                      <div className="text-center group-hover:scale-110 transition-all duration-500">
+                        <div className="w-16 h-16 bg-gradient-to-br from-white/20 to-white/10 rounded-lg flex items-center justify-center mb-2 opacity-50 group-hover:opacity-100 transition-opacity duration-500">
+                          <span className="text-white font-bold text-lg">
+                            {client.name.charAt(0)}
+                          </span>
+                        </div>
+                        <span className="text-white text-xs font-medium opacity-50 group-hover:opacity-100 transition-opacity duration-500 leading-tight">
+                          {client.name}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Tooltip on Hover */}

@@ -5,6 +5,7 @@ const HeroSection = () => {
   const [videoError, setVideoError] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const videoRef = useRef(null);
 
   const togglePlayPause = () => {
@@ -47,11 +48,28 @@ const HeroSection = () => {
             muted={isMuted}
             loop
             playsInline
+            preload="metadata"
             className="absolute inset-0 w-full h-full object-cover opacity-60 cursor-pointer"
             onError={() => setVideoError(true)}
             onClick={togglePlayPause}
+            onLoadStart={() => {
+              // Ensure video plays on mobile/Vercel
+              if (videoRef.current) {
+                videoRef.current.load();
+              }
+            }}
+            onLoadedData={() => setVideoLoaded(true)}
+            onCanPlay={() => {
+              if (videoRef.current && !videoError) {
+                videoRef.current.play().catch(err => {
+                  console.warn('Video autoplay failed:', err);
+                  setIsPlaying(false);
+                });
+              }
+            }}
           >
             <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
           </video>
         )}
         
@@ -79,7 +97,7 @@ const HeroSection = () => {
 
       {/* Minimal Hero Content */}
       <div className="relative z-10 h-full flex items-center justify-center">
-        <div className="text-center">
+        {/* <div className="text-center">
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
             Digital Excellence
           </h1>
@@ -89,7 +107,7 @@ const HeroSection = () => {
           <button className="bg-amber-800/20 backdrop-blur-md text-white px-12 py-4 rounded-full hover:bg-amber-700/30 transition-all duration-300 font-semibold text-lg border-2 border-amber-600/40">
             Get Started
           </button>
-        </div>
+        </div> */}
       </div>
     </section>
   );
